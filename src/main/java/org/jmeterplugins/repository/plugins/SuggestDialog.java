@@ -43,7 +43,7 @@ public class SuggestDialog extends EscapeDialog implements GenericCallback<Strin
 
     private void init(Set<Plugin> plugins, final String testPlan) {
         setLayout(new BorderLayout());
-        setIconImage(PluginManagerMenuItem.getPluginsIcon(manager.hasAnyUpdates()).getImage());
+        setIconImage(PluginManagerMenuItem.getPluginImage(manager.hasAnyUpdates()));
         ComponentUtil.centerComponentInWindow(this);
 
         JPanel mainPanel = new JPanel(new BorderLayout(0, 0));

@@ -98,7 +98,7 @@ public class PluginManagerTest {
 
     @Test
     public void testApplyChanges() throws Exception {
-        String imgPath = "file:///" + new File(".").getAbsolutePath() + "/target/classes/org/jmeterplugins/logo.png";
+        String imgPath = "file:///" + new File(".").getAbsolutePath() + "/target/classes/org/jmeterplugins/logo.svg";
         String str = "{\"id\": 0,  \"markerClass\": \"" + PluginsListTest.class.getName() + "\"," +
                 " \"screenshotUrl\": \"" + imgPath + "\", \"name\": 3, \"description\": 4, \"helpUrl\": 5, \"vendor\": 5, \"installerClass\": \"test\", " +
                 "\"versions\" : { \"0.1\" : { \"changes\": \"fix verified exception1\" }," +

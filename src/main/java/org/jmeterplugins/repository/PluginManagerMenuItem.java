@@ -6,15 +6,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import com.github.weisj.darklaf.icons.IconLoader;
+import com.github.weisj.darklaf.icons.ImageSource;
 import org.apache.jmeter.gui.GuiPackage;
 import org.apache.jmeter.gui.MainFrame;
 import org.apache.jmeter.gui.util.JMeterToolBar;
-import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.logging.LoggingManager;
 import org.apache.log.Logger;
 import org.jmeterplugins.repository.logging.LoggingHooker;
 import org.jmeterplugins.repository.util.ComponentFinder;
 
+import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
 public class PluginManagerMenuItem extends JMenuItem implements ActionListener {
@@ -108,19 +110,46 @@ public class PluginManagerMenuItem extends JMenuItem implements ActionListener {
         dialog.setVisible(true);
     }
 
-    public static ImageIcon getIcon22Px(boolean hasUpdates) {
-        if (hasUpdates) {
-            return new ImageIcon(PluginManagerMenuItem.class.getResource("/org/jmeterplugins/logo22Update.png"));
+    public static Icon getIcon22Px(boolean hasUpdates) {
+        return getPluginsIcon(hasUpdates, 22);
+    }
+
+    public static Icon getPluginsIcon(boolean hasUpdates) {
+        return getPluginsIcon(hasUpdates, 16);
+    }
+
+    public static Image getPluginImage(boolean hasUpdates) {
+        Icon icon = getPluginsIcon(hasUpdates, 64);
+        if (icon instanceof ImageSource) {
+            return ((ImageSource) icon).createImage(64, 64);
         } else {
-            return new ImageIcon(PluginManagerMenuItem.class.getResource("/org/jmeterplugins/logo22.png"));
+            BufferedImage img = createCompatibleTransparentImage(64, 64);
+            Graphics g = img.getGraphics();
+            icon.paintIcon(null, g, 0,0);
+            g.dispose();
+            return img;
         }
     }
 
-    public static ImageIcon getPluginsIcon(boolean hasUpdates) {
+    private static Icon getPluginsIcon(boolean hasUpdates, int size) {
         if (hasUpdates) {
-            return new ImageIcon(PluginManagerMenuItem.class.getResource("/org/jmeterplugins/logoUpdate.png"));
+            return IconLoader.get().getIcon("/org/jmeterplugins/logoUpdate.svg", size, size);
         } else {
-            return new ImageIcon(PluginManagerMenuItem.class.getResource("/org/jmeterplugins/logo.png"));
+            return IconLoader.get().getIcon("/org/jmeterplugins/logo.svg", size, size);
         }
+    }
+
+    private static BufferedImage createCompatibleTransparentImage(final int width, final int height) {
+        return isHeadless() ? new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
+                            : getLocalGraphicsConfiguration().createCompatibleImage(width, height,
+                                                                                    Transparency.BITMASK);
+    }
+
+    private static boolean isHeadless() {
+        return GraphicsEnvironment.isHeadless();
+    }
+
+    private static GraphicsConfiguration getLocalGraphicsConfiguration() {
+        return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
     }
 }

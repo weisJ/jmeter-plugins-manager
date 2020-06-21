@@ -29,7 +29,7 @@ public class PluginsListTest {
             "What's new in version 0.3: fix verified exception1";
     @Test
     public void testFlow() throws Exception {
-        String imgPath = "file:///" + new File(".").getAbsolutePath() + "/target/classes/org/jmeterplugins/logo.png";
+        String imgPath = "file:///" + new File(".").getAbsolutePath() + "/target/classes/org/jmeterplugins/logo.svg";
         String str = "{\"id\": 0,  \"markerClass\": \"" + PluginsListTest.class.getName() + "\"," +
                 " \"screenshotUrl\": \"" + imgPath + "\", \"name\": 3, \"description\": 4, \"helpUrl\": 5, \"vendor\": 5, \"installerClass\": \"test\", " +
                 "\"versions\" : { \"0.1\" : { \"changes\": \"fix verified exception1\", \"downloadUrl\": \"https://search.maven.org/remotecontent?filepath=kg/apc/jmeter-plugins-webdriver/0.3/jmeter-plugins-webdriver-0.1.jar\" }," +
